@@ -48,6 +48,12 @@ args_parser.parser.set_defaults(
 
 args_parser.args = args_parser.parser.parse_args()
 
+# Privacy Enforcements
+args_parser.args.disable_image_log = True
+args_parser.args.disable_analytics = True
+args_parser.args.disable_metadata = True
+
+
 # (Disable by default because of issues like https://github.com/lllyasviel/Fooocus/issues/724)
 args_parser.args.always_offload_from_vram = not args_parser.args.disable_offload_from_vram
 

@@ -40,22 +40,7 @@ def load_cache_from_file():
 
 
 def save_cache_to_file(filename=None, hash_value=None):
-    global hash_cache
-
-    if filename is not None and hash_value is not None:
-        items = [(filename, hash_value)]
-        mode = 'at'
-    else:
-        items = sorted(hash_cache.items())
-        mode = 'wt'
-
-    try:
-        with open(hash_cache_filename, mode, encoding='utf-8') as fp:
-            for filepath, hash_value in items:
-                json.dump({filepath: hash_value}, fp)
-                fp.write('\n')
-    except Exception as e:
-        print(f'[Cache] Saving failed: {e}')
+    return # Privacy mode: cache saving disabled
 
 
 def init_cache(model_filenames, paths_checkpoints, lora_filenames, paths_loras):
