@@ -23,6 +23,7 @@ def get_current_html_path(output_format=None):
     return html_name
 
 
+def log(img, metadata, metadata_parser: MetadataParser | None = None, output_format=None, task=None, persist_image=True) -> str:
     # Always use temp path, ignore persist_image flag to avoid saving to outputs
     path_outputs = modules.config.temp_path
     output_format = output_format if output_format else modules.config.default_output_format
