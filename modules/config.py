@@ -769,8 +769,8 @@ def add_ratio(x):
 
 
 # Privacy mode: Config saving disabled
-# default_aspect_ratio = add_ratio(default_aspect_ratio)
-# available_aspect_ratios_labels = [add_ratio(x) for x in available_aspect_ratios]
+default_aspect_ratio = add_ratio(default_aspect_ratio)
+available_aspect_ratios_labels = [add_ratio(x) for x in available_aspect_ratios]
 
 # if not os.path.exists(config_path):
 #    pass
