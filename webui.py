@@ -23,6 +23,7 @@ from modules.private_logger import get_current_html_path
 from modules.ui_gradio_extensions import reload_javascript
 from modules.auth import auth_enabled, check_auth
 from modules.util import is_json
+from modules.launch_util import delete_folder_content
 
 def get_task(*args):
     args = list(args)
@@ -141,6 +142,18 @@ def inpaint_mode_change(mode, inpaint_engine_version):
         gr.Dataset.update(visible=False, samples=modules.config.example_inpaint_prompts),
         False, inpaint_engine_version, 1.0, 0.618
     ]
+
+
+def clean_temp_dir():
+    try:
+        if delete_folder_content(modules.config.temp_path, prefix='[Force Clean] '):
+            print(f'[Force Clean] cleaned {modules.config.temp_path}')
+            return gr.update(value='Cleaned!')
+        else:
+            return gr.update(value='Failed (Check Console)')
+    except Exception as e:
+        print(f'[Force Clean] Error: {e}')
+        return gr.update(value=f'Error: {e}')
 
 
 reload_javascript()
@@ -617,6 +630,9 @@ with shared.gradio_root:
 
                 history_link = gr.HTML()
                 shared.gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
+
+                force_clean_button = gr.Button(label='Force Clean Temp', value='Force Clean Temp', variant='secondary')
+                force_clean_button.click(clean_temp_dir, inputs=[], outputs=[force_clean_button], show_progress=True, queue=False)
 
             with gr.Tab(label='Styles', elem_classes=['style_selections_tab']):
                 style_sorter.try_load_sorted_styles(
